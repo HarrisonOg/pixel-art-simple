@@ -4,7 +4,8 @@ const state = {
     currentColor: '#000000',
     currentTool: 'draw',
     isDrawing: false,
-    pixels: []
+    pixels: [],
+    backgroundColor: 'transparent'
 };
 
 // Preset color palette
@@ -191,10 +192,14 @@ function downloadAsPNG() {
 
     const ctx = canvas.getContext('2d');
 
-    // Transparent background by default
-    // Optionally fill with white: ctx.fillStyle = 'white'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // Fill background if white is selected
+    if (state.backgroundColor === 'white') {
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    // Otherwise transparent background (default canvas behavior)
 
-    // Draw each pixel
+    // Draw each pixel (only non-null pixels)
     for (let row = 0; row < state.gridSize; row++) {
         for (let col = 0; col < state.gridSize; col++) {
             if (state.pixels[row][col]) {
@@ -222,6 +227,13 @@ function setupEventListeners() {
     // Grid size selector
     document.getElementById('grid-size').addEventListener('change', (e) => {
         handleGridSizeChange(parseInt(e.target.value));
+    });
+
+    // Background selector
+    document.querySelectorAll('input[name="background"]').forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            state.backgroundColor = e.target.value;
+        });
     });
 
     // Color picker
