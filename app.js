@@ -5,7 +5,8 @@ const state = {
     currentTool: 'draw',
     isDrawing: false,
     pixels: [],
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    outputSize: 512
 };
 
 // Preset color palette
@@ -29,6 +30,9 @@ function init() {
     initializeGrid(state.gridSize);
     setupColorPalette();
     setupEventListeners();
+
+    // Set initial min constraint for output size
+    document.getElementById('output-size').min = state.gridSize;
 }
 
 // Initialize grid with given size
@@ -181,14 +185,28 @@ function handleGridSizeChange(newSize) {
     }
 
     initializeGrid(newSize);
+
+    // Update output size constraints based on new grid size
+    const outputSizeInput = document.getElementById('output-size');
+    outputSizeInput.min = newSize;
+
+    // If current output size is less than new minimum, adjust it
+    if (state.outputSize < newSize) {
+        state.outputSize = newSize;
+        outputSizeInput.value = newSize;
+    }
 }
 
 // Download as PNG
 function downloadAsPNG() {
     const canvas = document.createElement('canvas');
-    const pixelSize = 16; // Each grid cell = 16x16 pixels in output
-    canvas.width = state.gridSize * pixelSize;
-    canvas.height = state.gridSize * pixelSize;
+
+    // Use the user-specified output size
+    canvas.width = state.outputSize;
+    canvas.height = state.outputSize;
+
+    // Calculate how many pixels each grid cell should be
+    const pixelSize = state.outputSize / state.gridSize;
 
     const ctx = canvas.getContext('2d');
 
@@ -217,7 +235,7 @@ function downloadAsPNG() {
     // Trigger download
     const link = document.createElement('a');
     const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
-    link.download = `pixel-art-${timestamp}.png`;
+    link.download = `pixel-art-${state.outputSize}x${state.outputSize}-${timestamp}.png`;
     link.href = canvas.toDataURL('image/png');
     link.click();
 }
@@ -234,6 +252,26 @@ function setupEventListeners() {
         radio.addEventListener('change', (e) => {
             state.backgroundColor = e.target.value;
         });
+    });
+
+    // Output size selector
+    const outputSizeInput = document.getElementById('output-size');
+    outputSizeInput.addEventListener('change', (e) => {
+        let size = parseInt(e.target.value);
+
+        // Enforce constraints
+        const minSize = state.gridSize;
+        const maxSize = 1024;
+
+        if (size < minSize) {
+            size = minSize;
+            e.target.value = minSize;
+        } else if (size > maxSize) {
+            size = maxSize;
+            e.target.value = maxSize;
+        }
+
+        state.outputSize = size;
     });
 
     // Color picker

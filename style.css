@@ -140,6 +140,31 @@ h1 {
     border-color: #667eea;
 }
 
+#output-size {
+    width: 80px;
+    padding: 8px 12px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 1em;
+    background: white;
+    transition: border-color 0.2s;
+}
+
+#output-size:hover {
+    border-color: #667eea;
+}
+
+#output-size:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.size-label {
+    font-size: 0.85em;
+    color: #555;
+}
+
 .tool-btn, .action-btn {
     padding: 10px 20px;
     border: 2px solid #ddd;
