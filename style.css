@@ -1,0 +1,221 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.app-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h1 {
+    font-size: 2em;
+    color: #333;
+    font-weight: 700;
+}
+
+/* Toolbar Styling */
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    align-items: center;
+}
+
+.toolbar-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.toolbar-group label {
+    font-weight: 600;
+    color: #555;
+    font-size: 0.9em;
+}
+
+#grid-size {
+    padding: 8px 12px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 1em;
+    background: white;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+#grid-size:hover {
+    border-color: #667eea;
+}
+
+#color-picker {
+    width: 60px;
+    height: 40px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    background: none;
+}
+
+.color-palette {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.color-swatch {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: all 0.2s;
+}
+
+.color-swatch:hover {
+    transform: scale(1.15);
+    border-color: #333;
+}
+
+.color-swatch.active {
+    border-color: #667eea;
+    box-shadow: 0 0 0 2px white, 0 0 0 4px #667eea;
+}
+
+.tool-btn, .action-btn {
+    padding: 10px 20px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.95em;
+    font-weight: 600;
+    cursor: pointer;
+    background: white;
+    transition: all 0.2s;
+}
+
+.tool-btn:hover, .action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.tool-btn.active {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+.action-btn.primary {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+.action-btn.primary:hover {
+    background: #5568d3;
+}
+
+/* Canvas Container */
+.canvas-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: #f0f0f0;
+    border-radius: 12px;
+    min-height: 400px;
+}
+
+#pixel-grid {
+    display: grid;
+    gap: 0;
+    background: white;
+    border: 2px solid #333;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.pixel {
+    aspect-ratio: 1;
+    border: 1px solid #e0e0e0;
+    cursor: pointer;
+    background: white;
+    transition: opacity 0.1s;
+}
+
+.pixel:hover {
+    opacity: 0.8;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .app-container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+
+    .toolbar {
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .toolbar-group {
+        flex-basis: 100%;
+    }
+
+    .canvas-container {
+        padding: 10px;
+        overflow-x: auto;
+    }
+
+    #pixel-grid {
+        min-width: 280px;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .app-container {
+        padding: 15px;
+    }
+
+    .toolbar-group {
+        gap: 8px;
+    }
+
+    .tool-btn, .action-btn {
+        padding: 8px 16px;
+        font-size: 0.85em;
+    }
+
+    .color-swatch {
+        width: 28px;
+        height: 28px;
+    }
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Art Editor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="app-container">
+        <header>
+            <h1>Pixel Art Editor</h1>
+        </header>
+
+        <section class="toolbar">
+            <div class="toolbar-group">
+                <label for="grid-size">Grid Size:</label>
+                <select id="grid-size">
+                    <option value="4">4×4</option>
+                    <option value="8">8×8</option>
+                    <option value="16" selected>16×16</option>
+                    <option value="20">20×20</option>
+                    <option value="24">24×24</option>
+                    <option value="32">32×32</option>
+                </select>
+            </div>
+
+            <div class="toolbar-group">
+                <label for="color-picker">Color:</label>
+                <input type="color" id="color-picker" value="#000000">
+            </div>
+
+            <div class="toolbar-group">
+                <label>Palette:</label>
+                <div id="color-palette" class="color-palette"></div>
+            </div>
+
+            <div class="toolbar-group">
+                <button id="draw-btn" class="tool-btn active" data-tool="draw">Draw</button>
+                <button id="erase-btn" class="tool-btn" data-tool="erase">Erase</button>
+            </div>
+
+            <div class="toolbar-group">
+                <button id="clear-btn" class="action-btn">Clear</button>
+                <button id="download-btn" class="action-btn primary">Download PNG</button>
+            </div>
+        </section>
+
+        <section class="canvas-container">
+            <div id="pixel-grid"></div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
