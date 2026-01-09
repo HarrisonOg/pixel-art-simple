@@ -1,0 +1,42 @@
+name: Deploy pixel-art-simple to user site
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-pixel-art-simple
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source repo
+        uses: actions/checkout@v4
+
+      # Build step not needed because this repo is plain static files.
+      # But we create a clean "site" folder so we control exactly what gets published.
+      - name: Prepare publish directory
+        run: |
+          rm -rf site
+          mkdir -p site
+          cp index.html site/
+          cp app.js site/
+          cp style.css site/
+
+      - name: Deploy to HarrisonOg.github.io (master) under /projects/pixel-art-simple
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          external_repository: HarrisonOg/HarrisonOg.github.io
+          publish_branch: master
+          publish_dir: ./site
+          destination_dir: projects/pixel-art-simple
+          commit_message: "Deploy pixel-art-simple (${{
+            github.sha }})"
